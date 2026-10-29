@@ -3,10 +3,10 @@
 The source of **https://intertie.dev**: the public directory of Intertie
 implementations, served by GitHub Pages from this repository.
 
-Intertie is an open protocol for shared channels between organizations, with no
-intermediary. Its specification, reference implementation and conformance runner live
-in a separate repository that is **not public yet**. This directory will link to it
-once it is.
+[Intertie](https://github.com/Hakiwen/intertie) is an open protocol for shared
+channels between organizations, with no intermediary. Its specification, reference
+implementation and conformance runner live in
+[Hakiwen/intertie](https://github.com/Hakiwen/intertie).
 
 - **A directory, not a service.** This site is static. It holds no keys or tokens,
   and no message between organizations passes through it.

@@ -1,8 +1,8 @@
 # Getting listed
 
-> The conformance runner and the specification live in the Intertie protocol
-> repository, which is not public yet. Until it is, the steps below are for
-> implementers who have been given access.
+The specification and the conformance runner live in
+[Hakiwen/intertie](https://github.com/Hakiwen/intertie) (see
+[`spec/conformance.md`](https://github.com/Hakiwen/intertie/blob/main/spec/conformance.md)).
 
 ## How a listing works
 
