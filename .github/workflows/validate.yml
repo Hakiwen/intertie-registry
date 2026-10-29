@@ -1,0 +1,19 @@
+name: validate
+on:
+  pull_request:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Schema, report and signature checks
+        run: node scripts/validate.mjs
+      - name: Self-test of the validator
+        run: node test/validate.test.mjs

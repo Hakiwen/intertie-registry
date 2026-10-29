@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Intertie Implementations</title>
+<meta name="description" content="Directory of chat tools and adapters that implement Intertie, the open protocol for shared channels between organizations.">
+<style>
+:root{--bg:#fbfaf8;--fg:#1d1b18;--mute:#6f6a62;--line:#e6e2db;--acc:#1f3a5f;--card:#ffffff;--ok:#2f6b3a}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#171614;--fg:#f2efe9;--mute:#a59f95;--line:#3a3631;--acc:#9cbbe3;--card:#211f1c;--ok:#8cc79a}}
+:root[data-theme="dark"]{--bg:#171614;--fg:#f2efe9;--mute:#a59f95;--line:#3a3631;--acc:#9cbbe3;--card:#211f1c;--ok:#8cc79a}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
+main{max-width:960px;margin:0 auto;padding:40px 16px 64px}
+h1{font-size:32px;line-height:1.15;margin:0 0 8px;letter-spacing:-.01em}
+.lede{font-size:18px;color:var(--mute);max-width:46em;margin:0 0 28px}
+.note{border:1px solid var(--line);background:var(--card);border-radius:10px;padding:14px 16px;margin:0 0 28px;font-size:15px}
+.note b{color:var(--acc)}
+table{width:100%;border-collapse:collapse;font-size:15px}
+th,td{text-align:left;padding:10px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--mute);font-weight:600}
+.tag{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:0 8px;margin:0 4px 4px 0;font-size:12px;white-space:nowrap}
+.tag.core{border-color:var(--acc);color:var(--acc)}
+a{color:var(--acc)}
+.mute{color:var(--mute)}
+.empty{padding:28px 8px;color:var(--mute)}
+.wrap{overflow-x:auto}
+footer{margin-top:40px;font-size:14px;color:var(--mute)}
+@media (max-width:640px){h1{font-size:26px}.hide-sm{display:none}}
+</style>
+</head>
+<body>
+<main>
+  <h1>Intertie implementations</h1>
+  <p class="lede">These chat tools and adapters implement <a href="https://github.com/Hakiwen/intertie">Intertie</a>, the open protocol that lets two organizations share a channel directly. Each entry links the signed conformance report its maker submitted.</p>
+  <div class="note">
+    <b>This is a directory, not a service.</b> Messages between organizations never pass through this site or through its operator. Every listing is <b>self-certified</b>: the implementer ran the conformance suite against their own endpoint and signed the results with the key published at <code>https://&lt;their-org&gt;/.well-known/intertie</code>. CI checks that signature and the report's schema on every submission. A listing does not mean anyone audited the implementation.
+  </div>
+  <div class="wrap">
+  <table>
+    <thead><tr><th>Implementation</th><th>Kind</th><th>Roles</th><th>Levels</th><th class="hide-sm">Tested</th><th>Report</th></tr></thead>
+    <tbody id="rows"><tr><td colspan="6" class="empty">Loading…</td></tr></tbody>
+  </table>
+  </div>
+  <footer>
+    <p>To get listed, run <code>intertie-conformance</code> against your endpoint, sign the report with your org key, and open a pull request that adds one entry to <code>implementations.json</code>. Instructions are in <a href="https://github.com/Hakiwen/intertie-registry/blob/main/CONTRIBUTING.md">CONTRIBUTING.md</a>.</p>
+    <p>Data: <a href="implementations.json">implementations.json</a> · Schema: <a href="schema/implementation.schema.json">implementation.schema.json</a></p>
+  </footer>
+</main>
+<script>
+const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
+const tags = (xs, cls) => { const d = el('div'); for (const x of xs || []) d.append(el('span', 'tag' + (x === 'core' ? ' core' : ''), x)); return d; };
+fetch('implementations.json', { cache: 'no-store' }).then((r) => r.json()).then((list) => {
+  const rows = document.getElementById('rows');
+  rows.replaceChildren();
+  if (!list.length) { const tr = el('tr'); const td = el('td', 'empty', 'No implementations listed yet. Yours could be the first.'); td.colSpan = 6; tr.append(td); rows.append(tr); return; }
+  list.sort((a, b) => a.name.localeCompare(b.name));
+  for (const e of list) {
+    const tr = el('tr');
+    const name = el('td'); const a = el('a', null, e.name); a.href = /^https:\/\//.test(e.url) ? e.url : '#'; a.rel = 'nofollow noopener';
+    name.append(a, el('div', 'mute', `${e.vendor} · ${e.org}`));
+    const rep = el('td'); const ra = el('a', null, 'signed JSON'); ra.href = e.report; rep.append(ra);
+    tr.append(name, el('td', null, e.kind || ''), el('td', null), el('td', null), el('td', 'hide-sm', e.date), rep);
+    tr.children[2].append(tags(e.roles)); tr.children[3].append(tags(e.levels));
+    rows.append(tr);
+  }
+}).catch(() => { document.getElementById('rows').replaceChildren(); });
+</script>
+</body>
+</html>
