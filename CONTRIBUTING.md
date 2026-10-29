@@ -1,5 +1,24 @@
 # Getting listed
 
+> The conformance runner and the specification live in the Intertie protocol
+> repository, which is not public yet. Until it is, the steps below are for
+> implementers who have been given access.
+
+## How a listing works
+
+1. Run the conformance suite against your endpoint.
+2. Sign the report with your org key.
+3. Open a pull request here that adds the signed report and one entry.
+
+CI (`validate`) checks the entry and the report's signature against your published key.
+A maintainer reviews and merges, and the site redeploys on merge. To **update** an
+entry (a new report, more levels), open another pull request that replaces your report
+file and entry. To **remove** one, open a pull request deleting both files, or ask. An
+entry whose key is no longer published at your `/.well-known/intertie` fails CI and will
+be removed.
+
+## Steps
+
 1. **Run the suite** against your production endpoint. The runner needs a reachable
    HTTPS name of its own for the duration of the run, for example a tunnel:
 
@@ -20,7 +39,9 @@
    node packages/conformance/src/cli.ts verify signed.json
    ```
 
-3. **Open a pull request** that does two things:
+3. **Open a pull request.** Fork this repository and create a branch. Run
+   `node scripts/validate.mjs` locally: it fetches your discovery document and checks
+   the signature. Then open a pull request that does two things:
    - adds `reports/<your-slug>.json` (the signed report);
    - adds one object to `implementations.json`:
 

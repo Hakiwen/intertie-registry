@@ -32,7 +32,7 @@ footer{margin-top:40px;font-size:14px;color:var(--mute)}
 <body>
 <main>
   <h1>Intertie implementations</h1>
-  <p class="lede">These chat tools and adapters implement <a href="https://github.com/Hakiwen/intertie">Intertie</a>, the open protocol that lets two organizations share a channel directly. Each entry links the signed conformance report its maker submitted.</p>
+  <p class="lede">These chat tools and adapters implement Intertie, the open protocol that lets two organizations share a channel directly. Each entry links the signed conformance report its maker submitted.</p>
   <div class="note">
     <b>This is a directory, not a service.</b> Messages between organizations never pass through this site or through its operator. Every listing is <b>self-certified</b>: the implementer ran the conformance suite against their own endpoint and signed the results with the key published at <code>https://&lt;their-org&gt;/.well-known/intertie</code>. CI checks that signature and the report's schema on every submission. A listing does not mean anyone audited the implementation.
   </div>
@@ -64,7 +64,10 @@ fetch('implementations.json', { cache: 'no-store' }).then((r) => r.json()).then(
     tr.children[2].append(tags(e.roles)); tr.children[3].append(tags(e.levels));
     rows.append(tr);
   }
-}).catch(() => { document.getElementById('rows').replaceChildren(); });
+}).catch(() => {
+  const tr = el('tr'); const td = el('td', 'empty', 'Could not load implementations.json.'); td.colSpan = 6; tr.append(td);
+  document.getElementById('rows').replaceChildren(tr);
+});
 </script>
 </body>
 </html>

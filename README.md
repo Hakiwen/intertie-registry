@@ -1,8 +1,12 @@
 # Intertie implementations registry
 
-The source of the public directory of [Intertie](https://github.com/Hakiwen/intertie)
-implementations. Intended home: **https://intertie.dev**, served by GitHub Pages; see
-`CNAME`.
+The source of **https://intertie.dev**: the public directory of Intertie
+implementations, served by GitHub Pages from this repository.
+
+Intertie is an open protocol for shared channels between organizations, with no
+intermediary. Its specification, reference implementation and conformance runner live
+in a separate repository that is **not public yet**. This directory will link to it
+once it is.
 
 - **A directory, not a service.** This site is static. It holds no keys or tokens,
   and no message between organizations passes through it.
@@ -27,25 +31,13 @@ implementations. Intended home: **https://intertie.dev**, served by GitHub Pages
 | `scripts/validate.mjs` | The CI validator. Zero dependencies: `node scripts/validate.mjs` |
 | `.github/workflows/` | `validate` on pull requests, `pages` deploys `main` |
 
-## Domain setup (one-time, for whoever holds intertie.dev)
+## Hosting
 
-1. In **Settings → Pages**:
-   - set Source to "GitHub Actions";
-   - set the custom domain to `intertie.dev`;
-   - tick **Enforce HTTPS**. `.dev` is on the HSTS preload list, so HTTPS is mandatory.
-2. At DNS, point the apex at GitHub Pages:
-   - `A` records: `185.199.108.153`, `185.199.109.153`, `185.199.110.153`,
-     `185.199.111.153`;
-   - `AAAA` records: `2606:50c0:8000::153`, `2606:50c0:8001::153`,
-     `2606:50c0:8002::153`, `2606:50c0:8003::153`;
-   - optionally, `www` as a `CNAME` to `hakiwen.github.io`.
-3. Optionally, verify the domain under the account's **Settings → Pages → Verified
-   domains**, to prevent takeover.
-
-A Pages site is **public** even when its repository is private (and it needs a paid
-plan for a private repository). So the `pages` workflow runs manually only until
-launch. To go live, enable Pages and add `push: branches: [main]` to
-`.github/workflows/pages.yml`.
+- `main` deploys to GitHub Pages on every push, through `.github/workflows/pages.yml`.
+- The custom domain is `intertie.dev` (see `CNAME`), with HTTPS enforced. `.dev` is on
+  the HSTS preload list.
+- DNS: the apex has `A` and `AAAA` records to GitHub Pages, and `www` is a `CNAME` to
+  `hakiwen.github.io`.
 
 ## License
 
