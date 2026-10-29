@@ -15,7 +15,7 @@ const errors = [];
 const err = (where, msg) => errors.push(`${where}: ${msg}`);
 
 const ROLES = new Set(['home', 'peer-push', 'peer-pull']);
-const LEVELS = new Set(['core', 'threads', 'reactions', 'files', 'mentions', 'members']);
+const LEVELS = new Set(['core', 'security', 'threads', 'reactions', 'files', 'mentions', 'members']);
 const KINDS = new Set(['native', 'adapter', 'library']);
 const DNS = /^(?=.{1,253}$)(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$/;
 const DEV_ORG = /^localhost:\d{1,5}$/;
