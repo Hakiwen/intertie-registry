@@ -1,8 +1,10 @@
 name: pages
-# Manual until launch: a Pages site is PUBLIC even from a private repo, so publishing is
-# Ben's call. To launch: enable Pages (Source: GitHub Actions), then add `push: branches: [main]`.
+# Launched 2026-10-29: deploys on every push to main (and by hand). The site is public at
+# https://intertie.dev; Pages source is GitHub Actions, custom domain intertie.dev.
 on:
   workflow_dispatch:
+  push:
+    branches: [main]
 permissions:
   contents: read
   pages: write
