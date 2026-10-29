@@ -1,7 +1,7 @@
 name: pages
+# Manual until launch: a Pages site is PUBLIC even from a private repo, so publishing is
+# Ben's call. To launch: enable Pages (Source: GitHub Actions), then add `push: branches: [main]`.
 on:
-  push:
-    branches: [main]
   workflow_dispatch:
 permissions:
   contents: read

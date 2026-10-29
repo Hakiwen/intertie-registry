@@ -42,8 +42,10 @@ implementations. Intended home: **https://intertie.dev**, served by GitHub Pages
 3. Optionally, verify the domain under the account's **Settings → Pages → Verified
    domains**, to prevent takeover.
 
-GitHub Pages on a **private** repository needs a paid plan. On the free plan, the
-`pages` workflow starts deploying once the repository is public.
+A Pages site is **public** even when its repository is private (and it needs a paid
+plan for a private repository). So the `pages` workflow runs manually only until
+launch. To go live, enable Pages and add `push: branches: [main]` to
+`.github/workflows/pages.yml`.
 
 ## License
 
